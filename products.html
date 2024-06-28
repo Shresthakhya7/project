@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    /* Additional CSS for products.html */
+    .bill-payment {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .bill-payment label {
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .bill-payment input[type="text"],
+    .bill-payment input[type="tel"],
+    .bill-payment input[type="number"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .bill-payment button {
+      background-color: #f00;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .bill-payment button:hover {
+      background-color: #c00;
+    }
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.jpg" alt="Online Beverage Commerce Website">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+
+    <div class="user">
+      <a href="logout.html">Logout</a>
+      <a href="register.html">Register</a>
+    </div>
+  </header>
+
+  <!-- Bill Payment Section -->
+  <section class="bill-payment">
+    <h1>Customer Details</h1>
+    <p>Please fill out the form completely, and please note that a delivery fee will be charged according to company policy.</p>
+
+    <form id="billPaymentForm">
+      <label for="address">Address:</label>
+      <input type="text" id="address" required>
+
+      <label for="contactNo">Contact No:</label>
+      <input type="tel" id="contactNo" required>
+
+
+      <button type="submit">Confirm</button>
+      <button type="button" onclick="cancelPayment()">Cancel</button>
+    </form>
+  </section>
+  <footer>
+    <p>&copy; 2023 Online Beverage Commerce Website. All rights reserved.</p>
+  </footer>
+
+
+  <script>
+    function cancelPayment() {
+      window.location.href = 'cart.html';
+    }
+
+    const billPaymentForm = document.getElementById('billPaymentForm');
+    billPaymentForm.addEventListener('submit', handleBillPayment);
+
+    function handleBillPayment(event) {
+      event.preventDefault();
+
+      const address = document.getElementById('address').value;
+      const contactNo = document.getElementById('contactNo').value;
+
+      // Perform any necessary validation on the form fields
+
+      // Assuming the payment is successful, show the confirmation message and remove the item from the cart
+      alert('Thanks for your purchase!');
+
+      // Remove the item from the cart if necessary
+      const productToBuy = JSON.parse(sessionStorage.getItem('productToBuy'));
+      if (productToBuy) {
+        removeItemFromCart(productToBuy.name);
+        sessionStorage.removeItem('productToBuy');
+      }
+
+      window.location.href = 'cart.html';
+    }
+
+    function removeItemFromCart(productName) {
+      // Retrieve the cart data from localStorage
+      let cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+
+      // Remove the item from the cartData array
+      cartData = cartData.filter(product => product.name !== productName);
+
+      // Update the cart data in localStorage
+      localStorage.setItem('cartData', JSON.stringify(cartData));
+    }
+  </script>
+</body>
+</html>

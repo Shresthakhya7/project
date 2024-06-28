@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Beverage Commerce Website - FAQ</title>
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    /* Additional CSS for FAQ.html */
+    .faq {
+      padding: 40px;
+    }
+
+    .faq h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .faq .question {
+      margin-bottom: 10px;
+      color: #666;
+      cursor: pointer;
+    }
+
+    .faq .answer {
+      display: none;
+      color: #666;
+    }
+
+    .faq .answer.show {
+      display: block;
+    }
+
+    .faq .new-question-form {
+      margin-top: 30px;
+    }
+
+    .faq .new-question-form textarea {
+      width: 50%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .faq .new-question-form button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .faq .new-question-form button:hover {
+      background-color: #555;
+    }
+    
+  </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+  <div class="logo">
+    <img src="logo.jpg" alt="Online Beverage Commerce Website">
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="cart.html">Cart</a></li>
+    </ul>
+  </nav>
+  
+  <div class="user">
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </div>
+</header>
+<!-- FAQ Section -->
+<section class="faq">
+  <h2>Frequently Asked Questions</h2>
+  <div class="question-container">
+    <div class="question">
+      <p>What are the available payment options?</p>
+      <div class="answer">
+        <p>Answer: We accept various payment options including credit cards, debit cards, and online payment platforms like PayPal.</p>
+      </div>
+    </div>
+    <div class="question">
+      <p>How long does it take to deliver the products?</p>
+      <div class="answer">
+        <p>Answer: The delivery time varies depending on your location. Generally, it takes 3-5 business days for delivery within the country.</p>
+      </div>
+    </div>
+    <div class="question">
+      <p>Can I cancel my order?</p>
+      <div class="answer">
+        <p>Answer: Yes, you can cancel your order before it has been shipped. Please contact our customer support team for assistance with order cancellation.</p>
+      </div>
+    </div>
+    <div class="question">
+      <p>Do you offer international shipping?</p>
+      <div class="answer">
+        <p>Answer: Yes, we offer international shipping to selected countries. Shipping rates and delivery times may vary for international orders.</p>
+      </div>
+    </div>
+    <div class="question">
+      <p>What is your return policy?</p>
+      <div class="answer">
+        <p>Answer: We have a 30-day return policy. If you are not satisfied with your purchase, you can initiate a return within 30 days of receiving the product.</p>
+      </div>
+    </div>
+    <!-- Add more questions and answers as needed -->
+  </div>
+
+  <div class="new-question-form">
+    <h3>Any Queries?</h3>
+    <form id="new-question-form">
+      <textarea id="new-question" placeholder="Ask your question"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</section>
+
+<script>
+
+  // JavaScript code to toggle visibility of answers
+  const questions = document.querySelectorAll('.question');
+
+  questions.forEach((question) => {
+    const answer = question.querySelector('.answer');
+    question.addEventListener('click', () => {
+      question.classList.toggle('active');
+      answer.classList.toggle('show');
+    });
+    answer.classList.add('show'); // Show the answer by default
+  });
+
+  // JavaScript code to submit new questions
+  const form = document.getElementById('new-question-form');
+  const newQuestionInput = document.getElementById('new-question');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const newQuestion = newQuestionInput.value.trim();
+    if (newQuestion !== '') {
+      const newQuestionElement = document.createElement('div');
+      newQuestionElement.className = 'question';
+      newQuestionElement.innerHTML = `
+        <p>${newQuestion}</p>
+        <div class="answer">
+          <p>Answer: We will get back to you with a response as soon as possible.</p>
+        </div>
+      `;
+      newQuestionInput.value = '';
+      document.querySelector('.question-container').appendChild(newQuestionElement);
+      questions.push(newQuestionElement);
+      newQuestionElement.addEventListener('click', () => {
+        newQuestionElement.classList.toggle('active');
+        const answer = newQuestionElement.querySelector('.answer');
+        answer.classList.toggle('show');
+      });
+
+      // Store the new question and answer in local storage
+      const storedQuestions = JSON.parse(localStorage.getItem('questions')) || [];
+      const newStoredQuestion = {
+        question: newQuestion,
+        answer: 'We will get back to you with a response as soon as possible.'
+      };
+      storedQuestions.push(newStoredQuestion);
+      localStorage.setItem('questions', JSON.stringify(storedQuestions));
+    }
+  });
+
+  // Load stored questions and answers from local storage
+  window.addEventListener('DOMContentLoaded', () => {
+    const storedQuestions = JSON.parse(localStorage.getItem('questions')) || [];
+
+    const questionContainer = document.querySelector('.question-container');
+
+    storedQuestions.forEach((storedQuestion) => {
+      const newQuestionElement = document.createElement('div');
+      newQuestionElement.className = 'question';
+      newQuestionElement.innerHTML = `
+        <p>${storedQuestion.question}</p>
+        <div class="answer">
+          <p>Answer: ${storedQuestion.answer}</p>
+        </div>
+      `;
+
+      questionContainer.appendChild(newQuestionElement);
+      questions.push(newQuestionElement);
+      newQuestionElement.addEventListener('click', () => {
+        newQuestionElement.classList.toggle('active');
+        const answer = newQuestionElement.querySelector('.answer');
+        answer.classList.toggle('show');
+      });
+    });
+
+   
+
+    // JavaScript code to submit new questions
+    const form = document.getElementById('new-question-form');
+    const newQuestionInput = document.getElementById('new-question');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const newQuestion = newQuestionInput.value.trim();
+      if (newQuestion !== '') {
+        const newQuestionElement = document.createElement('div');
+        newQuestionElement.className = 'question';
+        newQuestionElement.innerHTML = `
+          <p>${newQuestion}</p>
+          <div class="answer">
+            <p>Answer: We will get back to you with a response as soon as possible.</p>
+          </div>
+        `;
+        newQuestionInput.value = '';
+        questionContainer.appendChild(newQuestionElement);
+        questions.push(newQuestionElement);
+        newQuestionElement.addEventListener('click', () => {
+          newQuestionElement.classList.toggle('active');
+          const answer = newQuestionElement.querySelector('.answer');
+          answer.classList.toggle('show');
+        });
+
+        
+      }
+    });
+  });
+</script>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2023 Online Beverage Commerce Website. All rights reserved.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Beverage Commerce Website - Shop</title>
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    /* Additional CSS for shop.html */
+    .shop {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .centered {
+      text-align: center;
+      font-weight: bold;
+      font-style: italic;
+    }
+  
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      width: 300px;
+    }
+  
+    .product-card h3 {
+      margin-top: 10px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .products img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+  
+    .product-card button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  
+    .product-card button:hover {
+      background-color: #555;
+    }
+  
+    .hidden {
+      display: none;
+    }
+  </style>
+  
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.jpg" alt="Online Beverage Commerce Website">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+   
+    <div class="user">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </header>
+
+  <!-- Shop Section -->
+  <section class="shop">
+    <h2 class="centered">All Products</h2>
+    <div class="products">
+      <div class="product-card vodka">
+        <img src="vodka.jpg" alt="Vodka ">
+        <h3>Vodka</h3>
+        <h4> A versatile and popular distilled spirit with a clear and neutral taste, enjoyed worldwide in various cocktails and on its own.</h4>
+        <h5>Rs.1600</h5>
+        <button onclick="addToCart('Vodka')">Add to Cart</button>
+      </div>
+      <div class="product-card whiskey">
+        <img src="old.png" alt="Whiskey ">
+        <h3>Old Durbar</h3>
+        <h4>A renowned brand of premium Nepali whisky known for its exceptional quality and rich heritage, offering a smooth and distinctive taste experience.</h4>
+        <h5>Rs.1000</h5>
+        <button onclick="addToCart('Old Durbar')">Add to Cart</button>
+      </div>
+      <div class="product-card rum">
+        <img src="marpha.jpg" alt="marpha">
+        <h3>Marpha</h3>
+        <h4>A charming village in Nepal known for its apple orchards, traditional architecture, and production of high-quality apple-based products like cider and brandy.</h4>
+        <h5>Rs.875</h5>
+        <button onclick="addToCart('Marpha')">Add to Cart</button>
+      </div>
+      <div class="product-card mustang">
+        <img src="sign.jpg" alt="sign">
+        <h3>Signature</h3>
+        <h4>Ones that have been thought out and crafted in unconventional ways to make them stand out from the rest.</h4>
+        <h5>Rs.1060</h5>
+        <button onclick="addToCart('Signature')">Add to Cart</button>
+      </div>
+      <div class="product-card mustang">
+        <img src="mustang.jpg" alt="Mustang">
+        <h3>Mustang</h3>
+        <h4>A rare taste of history which is skillfully crafted to perfection for a smooth and superior taste. </h4>
+        <h5>Rs.900</h5>
+        <button onclick="addToCart('Mustang')">Add to Cart</button>
+      </div> 
+      <div class="product-card mustang">
+        <img src="bud.jpeg" alt="Budweiser">
+        <h3>Budweiser</h3>
+        <h4>A medium-bodied, flavorful, crisp American-style lager.</h4>
+        <h5>Rs.400</h5>
+        <button onclick="addToCart('Budweiser')">Add to Cart</button>
+      </div>
+      <!-- Add more product cards as needed -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 Online Beverage Commerce Website. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function addToCart(productName) {
+      // Get the cart data from localStorage or create an empty array
+      const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+
+      // Check if the product is already in the cart
+      const existingProduct = cartData.find(product => product.name === productName);
+
+      if (existingProduct) {
+        // Increment the quantity if the product is already in the cart
+        existingProduct.quantity++;
+      } else {
+        // Add the product to the cart with quantity 1
+        cartData.push({ name: productName, quantity: 1 });
+      }
+
+      // Save the updated cart data to localStorage
+      localStorage.setItem('cartData', JSON.stringify(cartData));
+
+      // Redirect to the cart.html page
+      window.location.href = 'shop.html';
+    }
+
+    // Rest of the existing JavaScript code for search functionality
+    // ...
+  </script>
+  
+</body>
+</html>
